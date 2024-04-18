@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Puppeteir</title>
+</head>
+<body>
+    <h1>Test Puppeteer</h1>
+    <form id="form">
+        <input type="text" id="url" placeholder="Enter URL">
+        <button type="submit" id="btn">Download PDF</button>
+    </form>
+</html>
+<script lang="ts">
+    const form = document.getElementById('form');
+    const url = document.getElementById('url');
+    const btn = document.getElementById('btn');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        getPDF(url.value);       
+    });
+
+    const getPDF = (url) => {
+    fetch('/puppeteer_pdf?url=' + url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'reservations.pdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    })
+    .catch(err => console.trace(err));
+}
+</script>
