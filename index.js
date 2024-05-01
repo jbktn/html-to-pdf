@@ -22,11 +22,15 @@ app.get('/puppeteer_pdf', async (req, res) => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(URL, {
-            waitUntil: 'networkidle0'
+            waitUntil: 'networkidle2'
         });
-        page.setViewport({ width: 1920, height: 1080 });
+        page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2});
         page.emulateMediaType('screen');
-        const pdf = await page.pdf({ format: 'A4'});
+        const pdf = await page.pdf({ 
+            path: 'puppeteer.pdf',
+            format: 'A4',
+            pageRanges: '1',
+            printBackground: true});
         await browser.close();
 
         res.contentType('application/pdf');
