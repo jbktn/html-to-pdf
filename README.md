@@ -2,10 +2,10 @@
 
 ---
 
-Runs on NODE.js
-Start up with command:
-`npm run dev`
-in direcotry
+Runs on NODE.js<br>
+Start up with command:<br>
+`npm run dev`<br>
+in directory<br>
 
 ---
 
